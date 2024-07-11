@@ -1,0 +1,70 @@
+
+
+
+.go_btn_vbox{
+    margin-top: auto;
+}
+
+.right-aligned{
+    float: right;
+    margin-left: 20px;
+    margin-top: auto;
+}
+
+.form-element {
+    margin-right: 10px; 
+}
+
+
+.tott{
+    margin-top: 7px;
+    margin-right: 10px;
+}
+
+.totval{
+    margin-left: 48px;
+}
+
+.totvalinr{
+    margin-top: 7px;
+    margin-left: 7px;
+}
+
+.cgst{
+    margin-top: 7px;
+    margin-right: 7px;
+}
+
+.cgstval{
+    margin-left: 48px;
+}
+
+.cgstinr{
+    margin-top: 7px;
+    margin-left: 7px;
+}
+
+.sgst{
+    margin-top: 7px;
+    margin-right: 10px;
+}
+
+.sgstval{
+    margin-left: 48px;
+}
+
+.sgstinr{
+    margin-top: 7px;
+    margin-left: 7px;
+}
+
+.totalvalue{
+    margin-top: 7px;
+    margin-right: 7px;
+}
+
+.totalvalueinr{
+    margin-top: 7px;
+    margin-left: 7px;
+
+}

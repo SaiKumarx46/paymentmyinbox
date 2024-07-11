@@ -1,0 +1,113 @@
+_schema-version: "3.1"
+ID: paymentmyinbox
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: paymentmyinbox-srv
+  type: nodejs
+  path: gen/srv
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    readiness-health-check-http-endpoint: /health
+    readiness-health-check-type: http
+  build-parameters:
+    builder: npm
+- name: paymentmyinbox-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: paymentmyinbox-destination-service
+    parameters:
+      content-target: true
+  - name: paymentmyinbox_html_repo_host
+    parameters:
+      service-key:
+        name: paymentmyinbox_html_repo_host-key
+  - name: uaa_paymentmyinbox
+    parameters:
+      service-key:
+        name: uaa_paymentmyinbox-key
+  parameters:
+    content:
+      subaccount:
+        destinations:
+        - Name: appr_paymentmyinbox_html_repo_host
+          ServiceInstanceName: paymentmyinbox-html5-app-host-service
+          ServiceKeyName: paymentmyinbox_html_repo_host-key
+          sap.cloud.service: appr
+        - Authentication: OAuth2UserTokenExchange
+          Name: appr_uaa_paymentmyinbox
+          ServiceInstanceName: paymentmyinbox-xsuaa-service
+          ServiceKeyName: uaa_paymentmyinbox-key
+          sap.cloud.service: appr
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: paymentmyinbox-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: paymentmyinbox_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - paymentNamespaceworkflowuimodule.zip
+      name: paymentNamespaceworkflowuimodule
+      target-path: resources/
+- name: paymentNamespaceworkflowuimodule
+  type: html5
+  path: workflow-ui-module
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: paymentmyinbox-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        subaccount:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: paymentmyinbox-destination-service
+    service-plan: lite
+- name: paymentmyinbox_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: paymentmyinbox-html5-app-host-service
+    service-plan: app-host
+- name: uaa_paymentmyinbox
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: paymentmyinbox-xsuaa-service
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production

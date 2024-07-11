@@ -1,0 +1,279 @@
+<mvc:View controllerName="paymentNamespace.workflowuimodule.controller.App"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:l="sap.ui.layout"
+    xmlns:uxap="sap.uxap"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns="sap.m">
+    <App id="app">
+        <pages>
+            <Page xmlns="sap.m" id="headtitle">
+                <uxap:ObjectPageLayout id="ObjectPageLayout">
+
+                    <uxap:sections>
+                        <uxap:ObjectPageSection title="PO Line Items" titleUppercase="false">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection title="PO Line Items" mode="Collapsed" titleUppercase="false">
+                                    <uxap:blocks>
+                                        <HBox id="_IDGenHBox1">
+                                            <VBox class="form-element">
+                                                <Label id="PoId" text="PO Number" labelFor="input-a"/>
+                                                <Input id="input-1" valueState="Error" editable="false" valueStateText="Value is required" liveChange="ponumber" width="200px"/>
+                                            </VBox>
+                                            <VBox class="form-element">
+                                                <Label id="Conid" text="Contract Number" labelFor="input-b"/>
+                                                <Input id="input-b" valueState="Error" editable="false" valueStateText="Value is required" liveChange="Conid" width="200px"/>
+                                            </VBox>
+                                            <VBox class="form-element">
+                                                <Label id="Venname" text="Vendor Name" labelFor="input-c"/>
+                                                <Input id="input-c" width="200px" editable="false"/>
+                                            </VBox>
+                                            <VBox class="form-element">
+                                                <Label id="Vengst" text="Vendor GSTN" labelFor="input-d"/>
+                                                <Input id="input-d" width="200px" editable="false"/>
+                                            </VBox>
+                                            <VBox class="form-element">
+                                                <Label id="Vencode" text="Vendor Code" labelFor="input-e"/>
+                                                <Input id="input-e" valueState="Error" editable="false" valueStateText="Value is required" liveChange="Vencode" width="200px"/>
+                                            </VBox>
+                                            <VBox class="form-element">
+                                                <Label id="Approver_Email" text="Approver Email" labelFor="input-e"/>
+                                                <Input id="input-f" valueState="Error" editable="false" valueStateText="Value is required" liveChange="Vencode" width="200px"/>
+                                            </VBox>
+
+                                        </HBox>
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+
+
+
+                        <uxap:ObjectPageSection title="Details" titleUppercase="false">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection title="Payment Information" mode="Collapsed" titleUppercase="false">
+                                    <uxap:blocks>
+
+                                        <HBox id="_IDGenHBox3">
+
+                                            <VBox class="form-element">
+                                                <Label id = "advceno" text="Advance Payment Number" labelFor="input-a" />
+                                                <Input id="advanceno" valueState="Error" editable="false" valueStateText="Value is required" width="200px" />
+                                            </VBox>
+                                            <VBox class="form-element">
+                                                <Label id = "advnadate" text="Advance Payment Date" labelFor="input-b" />
+                                                <DatePicker id="advancedate" editable="false" width="200px"></DatePicker>
+                                            </VBox>
+                                            <VBox class="form-element">
+                                                <Label id = "advevalue" text="Advance Payment Value -INR" labelFor="input-c" />
+                                                <Input id="advancevalue" editable="false" width="200px"/>
+                                            </VBox>
+
+                                            <!-- <Button core:require="{ handler: 'advancedpayment/ext/fragment/Payment'}" text="Payment" press="handler.onPress" /> -->
+
+                                        </HBox>
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+
+
+
+                        <uxap:ObjectPageSection title="Details" titleUppercase="false">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection title="Advance Payment Line Items" mode="Collapsed" titleUppercase="false">
+                                    <uxap:blocks>
+                                        <Table id="table" selectionChange="onRowSelected" items="{
+                                                path: '/polineitem'}">
+                                            <columns>
+                                                <Column>
+                                                    <Text id="itemno" text="Item No" />
+                                                </Column>
+                                                <Column>
+                                                    <Text id = "item_desc" text="Item Description" />
+                                                </Column>
+                                                <Column>
+                                                    <Text id = "item_desc_cond" text="Item Description Condition" />
+                                                </Column>
+                                                <Column>
+                                                    <Text id = "plant" text="Plant" />
+                                                </Column>
+                                                <Column>
+                                                    <Text id = "unit_price" text="Unit Price" />
+                                                </Column>
+                                                <Column>
+                                                    <Text id = "quantity" text="Quantity" />
+                                                </Column>
+                                                <Column>
+                                                    <Text id = "cgst_percentage" text="CGST %" />
+                                                </Column>
+                                                <Column>
+                                                    <Text id="sgst_percentage" text="SGST %" />
+                                                </Column>
+                                                <Column>
+                                                    <Text id="cgst_value_static" text="CGST Value" />
+                                                </Column>
+                                                <Column>
+                                                    <Text id="sgst_value_static" text="SGST Value" />
+                                                </Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem >
+                                                    <cells>
+                                                        <Text text="{itemno}" />
+                                                        <Text text="{item_desc}" />
+                                                        <Text text="{item_desc_cond}" />
+                                                        <Text text="{plant}" />
+                                                        <Text text="{unit_price}" />
+                                                        <Text text="{quantity_static}" />
+                                                        <Text text="{cgst_percentage}" />
+                                                        <Text text="{sgst_percentage}" />
+                                                        <Text text="{cgst_value_static}" />
+                                                        <Text text="{sgst_value_static}" />
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                                        </Table>
+
+
+
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+
+
+
+                        <uxap:ObjectPageSection title="Details" titleUppercase="false">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection title="Added Item Information" mode="Collapsed" titleUppercase="false">
+                                    <uxap:blocks>
+                                        <VBox>
+                                            <Table id="helo" items="{
+                                                                path: '/checkeditem' 
+                                                                }">
+                                                <columns>
+                                                    <!-- <Column width="10rem">
+                                                        <Text id="itemno1" text="Item No" />
+                                                    </Column>
+                                                    <Column>
+                                                        <Text id="item_desc1" text="Item Description" />
+                                                    </Column>
+                                                    <Column>
+                                                        <Text id="item_desc_cond1" text="Item Description Condition" />
+                                                    </Column>
+                                                    <Column>
+                                                        <Text id="plant1" text="Plant" />
+                                                    </Column>
+                                                    <Column>
+                                                        <Text id="unit_price1" text="Unit Price" />
+                                                    </Column>
+                                                    <Column>
+                                                        <Text id="quantity1" text="Quantity"/>
+                                                    </Column>
+                                                    <Column>
+                                                        <Text id="cgst_percentage1" text="CGST %" />
+                                                    </Column>
+                                                    <Column>
+                                                        <Text id="sgst_percentage1" text="SGST %" />
+                                                    </Column>
+                                                    <Column>
+                                                        <Text id="cgst_value1" text="CGST Value" />
+                                                    </Column>
+                                                    <Column>
+                                                        <Text id="sgst_value1" text="SGST Value" />
+                                                    </Column>
+                                                    <Column>
+                                                        <Text id="amount1" text="Amount" />
+                                                    </Column> -->
+                                                </columns>
+                                                <items>
+                                                    <ColumnListItem>
+                                                        <cells>
+                                                            <!-- <Text text="{itemno1}" />
+                                                            <Text text="{item_desc1}"/>
+                                                            <Text text="{item_desc_cond1}" />
+                                                            <Text text="{plant1}" />
+                                                            <Text text="{unit_price1}" />
+                                                            <Text text="{quantity1}" />
+                                                            <Text text="{cgst_percentage1}" />
+                                                            <Text text="{sgst_percentage1}" />
+                                                            <Text text="{cgst_value1}" />
+                                                            <Text text="{sgst_value1}" />
+                                                            <Text text="{amount1}" /> -->
+                                                        </cells>
+
+                                                    </ColumnListItem>
+                                                </items>
+                                            </Table>
+                                        </VBox>
+
+
+
+
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+
+
+
+
+
+
+
+                        <uxap:ObjectPageSection title="Details" titleUppercase="false">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection title="Attachments" mode="Collapsed" titleUppercase="false">
+                                    <uxap:blocks>
+                                        <Table id="filesTable" class="filesfortable" items="{path:'filesTable', templateShareable:false}">
+                                            <columns>
+                                                
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem>
+                                                    <cells>
+                                                        <Link text="{fileName}" href="{url}" target="_blank" press="onFilePress"/>
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                                        </Table>
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+
+
+
+                        <uxap:ObjectPageSection title="Details" titleUppercase="false">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection title="Comments" mode="Collapsed" titleUppercase="false">
+                                    <uxap:actions>
+                                        <Button text="Comment History" id="cmt" press="onComment"/>
+                                    </uxap:actions>
+                                    <uxap:blocks>
+
+                                        <VBox id= "vv" class = "commentvbox" width="100%">
+                                            <!-- <HBox id="buttonContainer" alignItems="End" justifyContent="End" width="100%">
+                                            <Button id="rev_comm" class = "commentbtn" core:require="{ handler: 'preadvanceaplist/ext/fragment/Comments'}" text="Comments" press="handler.onPress" icon="sap-icon://comment" />
+                                        </HBox> -->
+                                            <TextArea id="comment" rows="8" width="100%" placeholder="Write your comment" value="{context>/comment}" editable="true" class="commenthbox" />
+
+                                        </VBox>
+
+
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+                    </uxap:sections>
+                </uxap:ObjectPageLayout>
+
+            </Page>
+        </pages>
+    </App>
+</mvc:View>
