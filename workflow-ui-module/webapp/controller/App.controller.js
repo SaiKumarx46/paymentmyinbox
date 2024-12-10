@@ -38,7 +38,7 @@ sap.ui.define(
 
 
         await $.ajax({
-          url: `https://b2a369b5trial-dev-invoiceform-srv.cfapps.us10-001.hana.ondemand.com/odata/v4/my/poheader?$filter=po_number eq '${poNum}' and registration_id eq '${rid}'&$expand=po_to_item,po_to_checkeditem,po_to_invoice,po_to_file,po_to_comment`,
+          url: `https://e6d92bdatrial-dev-invoiceform-srv.cfapps.us10-001.hana.ondemand.com/odata/v4/my/poheader?$filter=po_number eq '${poNum}' and registration_id eq '${rid}'&$expand=po_to_item,po_to_checkeditem,po_to_invoice,po_to_file,po_to_comment`,
           type: "GET",
           success: function (data) {
             oData = data;
@@ -51,10 +51,28 @@ sap.ui.define(
           }
         });
 
+
+        let invoiceData = null;
+
+        await $.ajax({
+          url: `https://e6d92bdatrial-dev-invoiceform-srv.cfapps.us10-001.hana.ondemand.com/odata/v4/my/Files?$filter=(registration_id eq '${rid}')`,
+          type: "GET",
+          success: function (data) {
+            invoiceData = data;
+            console.log('data', data);
+            debugger
+          },
+          error: function (error) {
+            console.log(`Error ${error}`);
+            debugger
+          }
+        });
+        
+
         this.byId("input-1").setValue(oData.value[0].po_number);
         this.byId("input-b").setValue(oData.value[0].contract_number);
         this.byId("input-c").setValue(oData.value[0].vendor_name);
-        this.byId("input-d").setValue(oData.value[0].vendor_gstin);
+        // this.byId("input-d").setValue(oData.value[0].vendor_gstin);
         this.byId("input-e").setValue(oData.value[0].vendor_code);
         this.byId("input-f").setValue(oData.value[0].approver_mail);
         this.byId("advanceno").setValue(oData.value[0].po_to_invoice.advance_payment_no);
@@ -64,7 +82,7 @@ sap.ui.define(
         oData.value[0].po_to_invoice.advance_payment_value
         var polineitem = oData.value[0].po_to_item;
         var checkeditem = oData.value[0].po_to_checkeditem;
-        var filesitem = oData.value[0].po_to_file;
+        var filesitem = invoiceData.value;
        
        
 

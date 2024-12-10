@@ -9,7 +9,7 @@
     xmlns:smartForm="sap.ui.comp.smartform"
     xmlns:smartField="sap.ui.comp.smartfield"
     xmlns="sap.m">
-    <App id="app">
+    <App id="app1">
         <pages>
             <Page xmlns="sap.m" id="headtitle">
                 <uxap:ObjectPageLayout id="ObjectPageLayout">
@@ -32,10 +32,10 @@
                                                 <Label id="Venname" text="Vendor Name" labelFor="input-c"/>
                                                 <Input id="input-c" width="200px" editable="false"/>
                                             </VBox>
-                                            <VBox class="form-element">
+                                            <!-- <VBox class="form-element">
                                                 <Label id="Vengst" text="Vendor GSTN" labelFor="input-d"/>
                                                 <Input id="input-d" width="200px" editable="false"/>
-                                            </VBox>
+                                            </VBox> -->
                                             <VBox class="form-element">
                                                 <Label id="Vencode" text="Vendor Code" labelFor="input-e"/>
                                                 <Input id="input-e" valueState="Error" editable="false" valueStateText="Value is required" liveChange="Vencode" width="200px"/>
